@@ -1,0 +1,33 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      # specify the version you desire here
+      - image: circleci/node:8.11.3-browsers
+      - image: circleci/mysql:5.7.22
+        environment:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_ROOT_PASSWORD: ''
+          MYSQL_DATABASE: review_db
+
+
+    steps:
+      - checkout
+       
+      # run tests!
+      - run: npm install
+      - run: sudo apt install mysql-client
+
+      - run: mysql -h 127.0.0.1 -uroot < ./schema.sql
+      - run: node ./data_generator.js
+
+      
+
+      - run: npm test
+
+
+

@@ -1,0 +1,10 @@
+.total {
+  margin-right: 16px;
+}
+
+.paws-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-top: 2px;
+}

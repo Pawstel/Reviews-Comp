@@ -1,0 +1,27 @@
+.paw {
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-right: 6px;
+}
+
+.full {
+  background-image: url('/pawstel/1/assets/full.png');
+}
+
+.half {
+  background-image: url('/pawstel/1/assets/half.png');
+}
+
+.empty {
+  background-image: url('/pawstel/1/assets/empty.png');
+}
+
+.big {
+  width: 18px;
+  height: 18px;
+}
+
+.small {
+  width: 16px;
+  height: 16px;
+}
