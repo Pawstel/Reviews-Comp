@@ -1,14 +1,21 @@
 
 const axios = require('axios');
-
+const fs = require('fs');
 const download = require('image-downloader');
-
 const XMLParser = require('xml-js');
-
 const DateGen = require('random-date-generator');
-
 const loremIpsum = require('lorem-ipsum');
 const db = require('./database/config.js');
+
+let userId = 1;
+let listingId = 1;
+let reviewId = 1;
+let userString = '';
+let listingString = '';
+let reviewString = '';
+let userCalled = 0;
+let listingCalled = 0;
+let reviewCalled = 0;
 
 const getPhotos = () => {
   var origUrls = [];
@@ -220,154 +227,149 @@ const insertUsers = () => {
   ];
 
   const photos = [
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/Akita_Inu_dog.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/IMAG1063.jpeg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/IMG_081858.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/IMG_4421.JPG',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/Polo.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/cooper1.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/dachshund-123503_640.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/dachshund-1920_640.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/dog-495122_640.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/funny dog.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02085620_6295.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02085620_8636.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02085936_8449.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02086910_5017.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02086910_6682.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02086910_984.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02087394_8903.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02088094_5285.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02088238_9025.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02088364_12710.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02088364_16339.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02088632_2661.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02088632_2837.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02089078_269.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02089078_4331.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02089078_45.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02090379_4754.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02090721_6617.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02091032_135.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02091032_3886.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02091134_12375.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02091134_17675.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02091467_2723.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02091635_1302.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02091831_3847.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02092002_11459.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02092002_4898.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02092002_49.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02092339_272.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02093256_1757.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02093256_4090.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02093647_3058.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02096051_7580.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02096177_362.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02096294_4137.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02097209_1923.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02098413_20398.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02098413_20830.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02099712_2226.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02100735_3599.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02100735_6886.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02101556_8039.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02104029_3491.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02104029_3564.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02104365_6131.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02105056_5111.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02105162_1366.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02105162_5913.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02105162_6690.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02105251_1382.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02105251_673.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02105412_2212.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02105412_4674.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02105505_3380.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02105641_1815.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02105641_2018.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02105641_9074.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02106030_10883.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02106030_15388.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02106166_1936.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02106382_1311.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02106382_2417.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02106550_12073.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02106550_5710.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02106550_9432.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02106662_13599.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02106662_16149.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02107142_1901.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02107142_2779.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02107142_5517.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02107142_7459.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02107683_1282.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02107683_4260.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02108000_2937.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02108000_3007.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02108422_1549.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02108915_142.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02109047_9396.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02109525_10792.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02109525_1624.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02109525_2770.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02109525_370.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02109961_3817.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02109961_5035.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02110063_8757.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02110627_13553.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02110806_4331.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02110958_12025.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02110958_12625.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02110958_9929.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02111129_2359.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02111129_3799.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02111129_4584.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02111277_1177.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02111500_1050.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02111500_1603.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02111889_11729.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02111889_466.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02111889_4967.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02111889_5532.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02112018_12953.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02112018_2336.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02112018_2896.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02112137_161.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02112137_5089.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02112137_5420.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02112350_177.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02112706_231.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02112706_473.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02113023_3509.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02113023_4128.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02113023_9001.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02113186_9924.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02113799_298.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02113978_2441.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02113978_386.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02115641_9110.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02115913_3529.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02115913_4119.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02116738_2020.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/n02116738_2802.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/shiba-1.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/shiba-2.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/shiba-3i.jpg',
-    'https://s3-us-west-1.amazonaws.com/adamdogpics/shiba-9.jpg'
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/1.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/2.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/3.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/4.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/5.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/6.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/7.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/8.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/9.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/10.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/11.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/12.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/13.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/14.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/15.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/16.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/17.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/18.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/19.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/20.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/21.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/22.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/23.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/24.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/25.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/26.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/27.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/28.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/29.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/30.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/31.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/32.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/33.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/34.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/35.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/36.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/37.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/38.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/39.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/40.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/41.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/42.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/43.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/44.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/45.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/46.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/47.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/48.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/49.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/50.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/51.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/52.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/53.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/54.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/55.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/56.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/57.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/58.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/59.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/60.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/61.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/62.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/63.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/64.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/65.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/66.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/67.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/68.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/69.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/70.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/71.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/72.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/73.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/74.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/75.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/76.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/77.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/78.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/79.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/80.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/81.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/82.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/83.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/84.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/85.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/86.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/87.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/88.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/89.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/90.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/91.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/92.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/93.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/94.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/95.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/96.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/97.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/98.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/99.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/100.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/101.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/102.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/103.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/104.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/105.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/106.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/107.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/108.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/109.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/110.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/111.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/112.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/113.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/114.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/115.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/116.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/117.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/118.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/119.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/120.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/121.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/122.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/123.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/124.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/125.jpeg',
+    'https://s3-us-west-2.amazonaws.com/jae-bae-static/dogs/doggo/126.jpeg'
   ]
 
-  for (var i = 0; i < names.length; i++) {
+  for (var i = 0; i < 10000; i++) {
     //write query here
-    qs = `INSERT INTO users (name, photo) VALUES ("${names[i]}", "${photos[i]}")`;
-    db.query(qs, function(err) {
-        if (err) {
-            console.log(err);
-            return;
-        }
-    });
+    // qs = `INSERT INTO users (name, photo) VALUES ('${names[i]}', '${photos[i]}')`;
+    // db.query(qs, function(err) {
+    //     if (err) {
+    //         console.log(err);
+    //         return;
+    //     }
+    // });
+    userString += `${userId}, ${names[Math.ceil(names.length * Math.random() - 1)]}, ${photos[Math.ceil(photos.length * Math.random() - 1)]} \n`
+    userId++;
   }
-
+  fs.writeFileSync(`./csvs/users${userCalled}.txt`, userString);
+  userString = '';
+  userCalled++;
 }
 
 const getContent = () => {
@@ -453,16 +455,16 @@ const getReview = () => {
 }
 
 const getUsers = () => {
-    let numOfRev = Math.floor(Math.random() * (135 - 1) + 1);
+    let numOfRev = Math.floor(Math.random() * (30 - 1) + 11);
     let total_user_ids = [];
     let user_ids =[];
-    for (let i = 1; i <= 135; i++) {
-        total_user_ids.push(i);
+    for (let i = 1; i <= 40; i++) {
+      total_user_ids.push(i);
     }
 
     for (let i = 0; i < numOfRev; i++) {
-        let randIndex = total_user_ids.splice(Math.floor(Math.random() * total_user_ids.length), 1).pop();
-        user_ids.push(randIndex);
+      let randIndex = total_user_ids.splice(Math.floor(Math.random() * total_user_ids.length), 1).pop();
+      user_ids.push(randIndex);
     }
 
     return user_ids;
@@ -470,9 +472,10 @@ const getUsers = () => {
 
 const insertReviews = () => {
   let qs;
-  for (let i = 1; i <= 100; i++) {
-    let listing_id = i;
+  // changed so instead of creating users 10M times, create more users
+  for (let i = 1; i <= 10; i++) {
     let users = getUsers();
+    let listing_id = i;
     users.forEach(function(user) {
       let review = getReview();
       review.listing_id = listing_id;
@@ -480,8 +483,9 @@ const insertReviews = () => {
 
       qs = `INSERT INTO reviews (listing_id, user_id, accuracy, communication, cleanliness, location, check_in, \
             _value, _date, content) \
-            VALUES ("${review.listing_id}", "${review.user_id}", "${review.accuracy}", "${review.communication}", \
-             "${review.cleanliness}", "${review.location}", "${review.check_in}", "${review._value}", "${review.date}", "${review._content}")`;
+            VALUES ('${review.listing_id}', '${review.user_id}', '${review.accuracy}', '${review.communication}', \
+             '${review.cleanliness}', '${review.location}', '${review.check_in}', '${review._value}', '${review.date}', '${review._content}')`;
+
       db.query(qs, function(err) {
           if(err) {
               console.log(err);
@@ -495,23 +499,47 @@ const insertReviews = () => {
 };
 
 const insertListings = () => {
-    const listings = [];
+    let listings = [];
     let qs; 
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 5000000; i++) {
         let listing = loremIpsum({units: 'sentences'});
         listings.push(listing);
     }
 
+    for (let i = 0; i < listings.length; i++) {
+      // qs = `INSERT INTO listings (name) VALUES ('${listings[i]}')`;
+      //   db.query(qs, function(err) {
+      //       if (err) {
+      //           console.log(err);
+      //           return;
+      //       }
+      //   })
+      listingString += `${listingId}, ${listings[i]} \n`;
+      listingId++
+    }
+  fs.writeFileSync(`./csvs/listing${listingCalled}.txt`, listingString);
+  listingString = '';
+  listingCalled++;
+  listings = [];
+  for (let i = 0; i < 5000000; i++) {
+        let listing = loremIpsum({units: 'sentences'});
+        listings.push(listing);
+    }
 
     for (let i = 0; i < listings.length; i++) {
-      qs = `INSERT INTO listings (name) VALUES ("${listings[i]}")`;
-        db.query(qs, function(err) {
-            if (err) {
-                console.log(err);
-                return;
-            }
-        })
+      // qs = `INSERT INTO listings (name) VALUES ('${listings[i]}')`;
+      //   db.query(qs, function(err) {
+      //       if (err) {
+      //           console.log(err);
+      //           return;
+      //       }
+      //   })
+      listingString += `${listingId}, ${listings[i]} \n`;
+      listingId++
     }
+  fs.writeFileSync(`./csvs/listing${listingCalled}.txt`, listingString);
+  userString = '';
+  userCalled++;
 };
 
 
