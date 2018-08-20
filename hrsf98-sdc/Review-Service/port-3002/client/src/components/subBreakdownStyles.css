@@ -1,0 +1,45 @@
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.sub-container {
+  width: 50%;
+}
+
+.left-box {
+  padding-right: 16px;
+  box-sizing: border-box;
+}
+
+.right-box {
+  padding-left: 16px;
+  box-sizing: border-box;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.row {
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.sub-row {
+  box-sizing: border-box;
+  width: 50%;
+}
+
+.title {
+  
+}
+
+.paws-container {
+  margin-top: -2px;
+}

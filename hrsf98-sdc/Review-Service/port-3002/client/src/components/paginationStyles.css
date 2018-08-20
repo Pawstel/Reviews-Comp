@@ -1,0 +1,56 @@
+
+.pagination-main {
+  margin-top: 28px;
+  display: flex;
+  flex-direction: row;
+}
+
+.pagination-main li {
+  vertical-align: middle;
+  line-height: 10px;
+  margin-right: 8px;
+  margin-left: 8px;
+  display: inline-block;
+  line-height: 20px;
+}
+
+.pagination-main li button{
+  display: inline-block;
+  background-color: transparent;
+  border: none;
+  font: inherit;
+  font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
+  text-decoration: none;
+  color: #008489;
+  cursor: pointer;
+  text-transform: none;
+}
+
+.pagination-main li button:focus{
+  outline: none !important;
+}
+
+.pagination-main li button.active {
+  color: #ffffff;
+}
+
+.pagination-main li button div {
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  border-radius: 16px;
+  text-align: center;
+}
+
+.pagination-main li button div.switch {
+  border: 1px solid #008489;;
+}
+
+.page-item {
+
+}
+
+.active div{
+  background-color: #008489 !important;
+  color: #ffffff !important;
+}

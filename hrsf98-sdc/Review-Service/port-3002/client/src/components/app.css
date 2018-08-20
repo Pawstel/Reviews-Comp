@@ -1,0 +1,9 @@
+
+.main-container {
+  width: 648px;
+  color: #484848;
+  margin: 20px;
+  font-weight: normal;
+  letter-spacing: normal !important;
+  font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
+}

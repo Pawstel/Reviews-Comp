@@ -1,0 +1,206 @@
+
+.-paginationStyles-pagination-main-1ECuWn- {
+  margin-top: 28px;
+  display: flex;
+  flex-direction: row;
+}
+
+.-paginationStyles-pagination-main-1ECuWn- li {
+  vertical-align: middle;
+  line-height: 10px;
+  margin-right: 8px;
+  margin-left: 8px;
+  display: inline-block;
+  line-height: 20px;
+}
+
+.-paginationStyles-pagination-main-1ECuWn- li button{
+  display: inline-block;
+  background-color: transparent;
+  border: none;
+  font: inherit;
+  font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
+  text-decoration: none;
+  color: #008489;
+  cursor: pointer;
+  text-transform: none;
+}
+
+.-paginationStyles-pagination-main-1ECuWn- li button:focus{
+  outline: none !important;
+}
+
+.-paginationStyles-pagination-main-1ECuWn- li button.-paginationStyles-active-irC4NV- {
+  color: #ffffff;
+}
+
+.-paginationStyles-pagination-main-1ECuWn- li button div {
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  border-radius: 16px;
+  text-align: center;
+}
+
+.-paginationStyles-pagination-main-1ECuWn- li button div.-paginationStyles-switch-3sedUV- {
+  border: 1px solid #008489;;
+}
+
+.-paginationStyles-page-item-3JKo-Y- {
+
+}
+
+.-paginationStyles-active-irC4NV- div{
+  background-color: #008489 !important;
+  color: #ffffff !important;
+}
+.-reviewListStyles-review-list-CoHGIY- {
+  
+}.-reviewEntryStyles-review-entry-3oCkJg- {
+  padding: 26px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.-reviewEntryStyles-header-container-3bWyOt- {
+  display: flex;
+  flex-direction: row;
+}
+
+.-reviewEntryStyles-review-info-GYhFpM- {
+  margin-left: 16px;
+}
+
+.-reviewEntryStyles-photo-container-3lvX6_- {
+  width: 48px;
+  height: 48px;
+  display: block;
+  position: relative;
+}
+
+.-reviewEntryStyles-avatar-1gdTEu- {
+  overflow: hidden;
+  border-radius: 50% !important;
+  border: 2px solid #ffffff !important;
+}
+
+.-reviewEntryStyles-user-name-2omWjX- {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.-reviewEntryStyles-review-date-_K8qnz- {
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.-reviewEntryStyles-content-3or8n_- {
+  margin-top: 16px;
+}.-summaryStyles-summary-main-3oULMV- {
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  vertical-align: center;
+  padding: 32px 0px;
+}
+
+.-summaryStyles-total-XsS5q9- {
+  margin-right: 16px;
+}.-pawsStyles-total-1cpWSv- {
+  margin-right: 16px;
+}
+
+.-pawsStyles-paws-container-3gLlVt- {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-top: 2px;
+}.-pawStyles-paw-73N5QA- {
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-right: 6px;
+}
+
+.-pawStyles-full-1g1ySY- {
+  background-image: url('/pawstel/1/assets/full.png');
+}
+
+.-pawStyles-half-20nPml- {
+  background-image: url('/pawstel/1/assets/half.png');
+}
+
+.-pawStyles-empty-3Ny7mt- {
+  background-image: url('/pawstel/1/assets/empty.png');
+}
+
+.-pawStyles-big-2iyXfn- {
+  width: 18px;
+  height: 18px;
+}
+
+.-pawStyles-small-2NsXzd- {
+  width: 16px;
+  height: 16px;
+}.-breakdownStyles-clearfix-28LnkG-::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.-breakdownStyles-main-container-6fDYS_- {
+  padding: 20px 0 0 0;
+}.-subBreakdownStyles-clearfix-2mxBuo-::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.-subBreakdownStyles-sub-container-1SaZ-E- {
+  width: 50%;
+}
+
+.-subBreakdownStyles-left-box-xyMOCe- {
+  padding-right: 16px;
+  box-sizing: border-box;
+}
+
+.-subBreakdownStyles-right-box-2U27NN- {
+  padding-left: 16px;
+  box-sizing: border-box;
+}
+
+.-subBreakdownStyles-left-3jC4aE- {
+  float: left;
+}
+
+.-subBreakdownStyles-right-24DFIZ- {
+  float: right;
+}
+
+.-subBreakdownStyles-row-RODzAd- {
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.-subBreakdownStyles-sub-row-1NM3PS- {
+  box-sizing: border-box;
+  width: 50%;
+}
+
+.-subBreakdownStyles-title-UTcZC7- {
+  
+}
+
+.-subBreakdownStyles-paws-container-276TME- {
+  margin-top: -2px;
+}
+.-app-main-container-JW4aL4- {
+  width: 648px;
+  color: #484848;
+  margin: 20px;
+  font-weight: normal;
+  letter-spacing: normal !important;
+  font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
+}
