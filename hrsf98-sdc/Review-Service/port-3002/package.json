@@ -9,7 +9,7 @@
   "scripts": {
     "test": "jest --coverage",
     "build": "webpack -d --watch",
-    "start": "nodemon ./server/server.js"
+    "start": "node ./server/server.js"
   },
   "dependencies": {
     "@newrelic/native-metrics": "^3.1.0",

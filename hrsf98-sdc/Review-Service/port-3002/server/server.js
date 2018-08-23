@@ -1,13 +1,13 @@
 require('newrelic');
 const compression = require('compression');
-const redis = require('redis');
+// const redis = require('redis');
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const db = require('../database/operations.js');
 // const redisServer = require('redis-server');
 // const REDIS_PORT = process.env.REDIS_PORT;
-const client = redis.createClient();
+// const client = redis.createClient();
 // const server = new redisServer(process.env.REDIS_PORT);
 
 
@@ -24,11 +24,11 @@ app.use('/pawstel/:id', express.static(path.join(__dirname, '/../client/dist')))
 
 app.get('/reviews_service/listing/overview/pawstel/:listingid', (req, res) => {
 
-  let isbn = req.query.isbn;
-  client.get(isbn, (err, result) => {
-    if (result) {
-      res.send(result);
-    } else {
+  // let isbn = req.query.isbn;
+  // client.get(isbn, (err, result) => {
+    // if (result) {
+    //   res.send(result);
+    // } else {
       const listing_id = Number(req.params.listingid);
       let ratingsObj = {};
 
@@ -63,16 +63,16 @@ app.get('/reviews_service/listing/overview/pawstel/:listingid', (req, res) => {
 
         res.status(200).json(ratingsObj);
       });
-    };
-  });
+  //   };
+  // });
 });
 
 app.get('/reviews_service/listing/reviews/pawstel/:listingid', (req, res) => {
-  let isbn = req.query.isbn;
-  client.get(isbn, (err, result) => {
-    if (result) {
-      res.send(result);
-    } else {
+  // let isbn = req.query.isbn;
+  // client.get(isbn, (err, result) => {
+  //   if (result) {
+  //     res.send(result);
+  //   } else {
 
       console.log('reviews!');
       const listing_id = Number(req.params.listingid);
@@ -84,8 +84,8 @@ app.get('/reviews_service/listing/reviews/pawstel/:listingid', (req, res) => {
        }
        res.status(200).json(results.rows);
       });
-    }
-  });
+  //   }
+  // });
 });
 
 app.put('/reviews_service/listing/update/pawstel/:listingid/:review', (req, res) => {
